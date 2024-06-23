@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Prediction</title>
+</head>
+<body>
+    <h1>Predict with Your Model</h1>
+    <form id="predictionForm">
+        <label for="input">Input Data:</label>
+        <input type="text" id="input" name="input">
+        <button type="button" onclick="makePrediction()">Predict</button>
+    </form>
+    <h2>Prediction: <span id="prediction"></span></h2>
+
+    <script>
+        async function makePrediction() {
+            const input = document.getElementById('input').value;
+            const response = await fetch('YOUR_GOOGLE_COLAB_URL/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: input.split(',').map(Number) })
+            });
+            const result = await response.json();
+            document.getElementById('prediction').innerText = result.output;
+        }
+    </script>
+</body>
+</html>
