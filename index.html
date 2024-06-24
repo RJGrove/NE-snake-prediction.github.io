@@ -3,27 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Prediction</title>
+    <title>Snake Species Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        #prediction {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Predict with Your Model</h1>
+    <h1>Snake Species Predictor</h1>
     <form id="predictionForm">
-        <label for="input">Input Data:</label>
-        <input type="text" id="input" name="input">
+        <label for="imageInput">Upload an Image:</label>
+        <input type="file" id="imageInput" name="image" accept="image/*">
         <button type="button" onclick="makePrediction()">Predict</button>
     </form>
     <h2>Prediction: <span id="prediction"></span></h2>
-
     <script>
         async function makePrediction() {
-            const input = document.getElementById('input').value;
+            const fileInput = document.getElementById('imageInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
             const response = await fetch('YOUR_GOOGLE_COLAB_URL/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ input: input.split(',').map(Number) })
+                body: formData
             });
+
             const result = await response.json();
             document.getElementById('prediction').innerText = result.output;
         }
