@@ -41,7 +41,7 @@
             const formData = new FormData();
             formData.append('file', file);
 
-            const response = await fetch('YOUR_GOOGLE_COLAB_URL/predict', {
+            const response = await fetch('http://172.28.0.12:5000/predict', {
                 method: 'POST',
                 body: formData
             });
